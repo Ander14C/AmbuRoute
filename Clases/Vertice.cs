@@ -8,6 +8,10 @@ namespace Clases
 {
     public class Vertice
     {
+        public Hospital dato;
 
+        public Vertice sig = null;
+
+        public ListaAristas ls = new ListaAristas();
     }
 }

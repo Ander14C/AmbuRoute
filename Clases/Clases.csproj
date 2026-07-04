@@ -44,6 +44,7 @@
     <Compile Include="Arista.cs" />
     <Compile Include="Dijkstra.cs" />
     <Compile Include="Grafo.cs" />
+    <Compile Include="Hospital.cs" />
     <Compile Include="ListaAristas.cs" />
     <Compile Include="ListaSimple.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
