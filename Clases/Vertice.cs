@@ -8,10 +8,13 @@ namespace Clases
 {
     public class Vertice
     {
+        // Información del hospital
         public Hospital dato;
 
+        // Siguiente vértice de la lista
         public Vertice sig = null;
 
+        // Lista de rutas hacia otros hospitales
         public ListaAristas ls = new ListaAristas();
     }
 }

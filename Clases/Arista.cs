@@ -8,9 +8,13 @@ namespace Clases
 {
     public class Arista
     {
+        // Hospital destino
         public Vertice destino;
+
+        // Tiempo de recorrido (peso)
         public float peso;
 
+        // Siguiente arista de la lista
         public Arista sig = null;
     }
 }
