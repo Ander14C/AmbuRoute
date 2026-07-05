@@ -17,17 +17,15 @@ namespace AmbuRoute
             g.GenerarMatriz();
             g.CrearGrafo();
 
-            Console.Title = "Sistema de Optimización de Rutas para Ambulancias";
+            //Console.Title = "Sistema de Optimización de Rutas para Ambulancias";
 
             Console.WriteLine("==============================================");
             Console.WriteLine(" SISTEMA DE OPTIMIZACIÓN DE RUTAS");
             Console.WriteLine("          PARA AMBULANCIAS");
             Console.WriteLine("==============================================");
 
-            // Mostrar hospitales
             g.MostrarHospitales();
 
-            // Mostrar matriz
             g.MostrarMatriz();
 
             Console.WriteLine();

@@ -59,41 +59,5 @@ namespace Clases
                 i++;
             }
         }
-
-        // Buscar una ruta por posición
-        public Arista Buscar(int pos)
-        {
-            Arista temp = primero;
-            int i = 1;
-
-            while (temp != null)
-            {
-                if (i == pos)
-                {
-                    return temp;
-                }
-
-                temp = temp.sig;
-                i++;
-            }
-
-            return null;
-        }
-
-        // Contar cuántas rutas tiene el hospital
-        public int Cantidad()
-        {
-            int contador = 0;
-
-            Arista temp = primero;
-
-            while (temp != null)
-            {
-                contador++;
-                temp = temp.sig;
-            }
-
-            return contador;
-        }
     }
 }

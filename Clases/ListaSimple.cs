@@ -47,42 +47,5 @@ namespace Clases
                 i++;
             }
         }
-
-        // Buscar un hospital por posición
-        public Vertice Buscar(int pos)
-        {
-            Vertice temp = primero;
-            int i = 1;
-
-            while (temp != null)
-            {
-                if (i == pos)
-                {
-                    return temp;
-                }
-
-                temp = temp.sig;
-                i++;
-            }
-
-            return null;
-        }
-
-        // Obtener la cantidad de hospitales
-        public int Cantidad()
-        {
-            int contador = 0;
-
-            Vertice temp = primero;
-
-            while (temp != null)
-            {
-                contador++;
-
-                temp = temp.sig;
-            }
-
-            return contador;
-        }
     }
 }

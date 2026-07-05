@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Arista.cs" />
-    <Compile Include="Dijkstra.cs" />
     <Compile Include="Grafo.cs" />
     <Compile Include="Hospital.cs" />
     <Compile Include="ListaAristas.cs" />

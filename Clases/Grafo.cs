@@ -54,28 +54,16 @@ namespace Clases
             ma = new int[nombres.Length, nombres.Length];
         }
 
-        // Devuelve el primer hospital
-        public Vertice GetInicio()
-        {
-            return l_vertices.primero;
-        }
-
         // Devuelve la cantidad de hospitales
         public int CantidadHospitales()
         {
             return nombres.Length;
         }
 
-        // Buscar hospital por posición
-        public Vertice BuscarHospital(int pos)
-        {
-            return l_vertices.Buscar(pos);
-        }
-
         // Mostrar hospitales registrados
         public void MostrarHospitales()
         {
-            Console.WriteLine("\n==========================================");
+            //Console.WriteLine("\n==========================================");
             Console.WriteLine("      HOSPITALES REGISTRADOS");
             Console.WriteLine("==========================================\n");
 
@@ -176,90 +164,7 @@ namespace Clases
                 origen = origen.sig;
             }
         }
-        // Obtener la matriz de adyacencia
-        public int[,] ObtenerMatriz()
-        {
-            return ma;
-        }
 
-        // Obtener el nombre de un hospital según su índice
-        public string ObtenerNombreHospital(int indice)
-        {
-            return nombres[indice];
-        }
-
-        // Obtener el índice de un vértice
-        public int ObtenerIndice(Vertice v)
-        {
-            Vertice temp = l_vertices.primero;
-            int indice = 0;
-
-            while (temp != null)
-            {
-                if (temp == v)
-                {
-                    return indice;
-                }
-
-                temp = temp.sig;
-                indice++;
-            }
-
-            return -1;
-        }
-
-        // Obtener un vértice según su índice
-        public Vertice ObtenerVertice(int indice)
-        {
-            Vertice temp = l_vertices.primero;
-            int i = 0;
-
-            while (temp != null)
-            {
-                if (i == indice)
-                {
-                    return temp;
-                }
-
-                temp = temp.sig;
-                i++;
-            }
-
-            return null;
-        }
-
-        // Mostrar todas las rutas disponibles desde un hospital
-        public void MostrarConexiones(Vertice origen)
-        {
-            Console.WriteLine();
-            Console.WriteLine("Hospital seleccionado:");
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(origen.dato.nombre);
-            Console.ResetColor();
-
-            Console.WriteLine("\nRutas disponibles:");
-
-            origen.ls.Mostrar();
-        }
-
-        // Mostrar la información de todos los hospitales
-        public void MostrarInformacionHospitales()
-        {
-            Console.WriteLine("\n=========== INFORMACIÓN DE HOSPITALES ===========\n");
-
-            Vertice temp = l_vertices.primero;
-            int i = 1;
-
-            while (temp != null)
-            {
-                Console.WriteLine("Hospital " + i);
-                Console.WriteLine(temp.dato);
-                Console.WriteLine("--------------------------------------");
-
-                temp = temp.sig;
-                i++;
-            }
-        }
         // Algoritmo de Dijkstra
         public void Dijkstra(int origen, int destino)
         {
