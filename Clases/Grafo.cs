@@ -136,48 +136,56 @@ namespace Clases
         // Algoritmo de Dijkstra
         public void Dijkstra(int origen, int destino)
         {
-            int n = CantidadHospitales(); 
 
-            int[] distancia = new int[n];
-            bool[] visitado = new bool[n];
-            int[] anterior = new int[n];
+            int n = CantidadHospitales(); // Guarda la cantidad de hospitales
 
+            int[] distancia = new int[n]; // Almacena la distancia mínima hacia cada hospital
+            bool[] visitado = new bool[n]; // Indica si un hospital ya fue visitado
+            int[] anterior = new int[n]; // Guarda el hospital anterior de la ruta
+
+            // Inicializar los arreglos
             for (int i = 0; i < n; i++)
             {
-                distancia[i] = int.MaxValue; 
-                visitado[i] = false;
-                anterior[i] = -1;
+                distancia[i] = int.MaxValue; // Todas las distancias empiezan en "infinito"
+                visitado[i] = false; // Ningún hospital ha sido visitado
+                anterior[i] = -1; // Aún no existe un hospital anterior
             }
 
-            distancia[origen] = 0; 
+            distancia[origen] = 0; // El hospital de origen tiene distancia 0
 
+            // Algoritmo principal
             for (int i = 0; i < n - 1; i++)
             {
-                int menor = int.MaxValue; 
-                int u = -1; 
+                int menor = int.MaxValue; // Guarda la menor distancia encontrada
+                int u = -1; // Guarda el índice del hospital más cercano
 
+                // Buscar el hospital no visitado con menor distancia
                 for (int j = 0; j < n; j++)
                 {
                     if (!visitado[j] && distancia[j] < menor)
                     {
-                        menor = distancia[j]; 
-                        u = j; 
+                        menor = distancia[j]; // Actualiza la menor distancia
+                        u = j; // Guarda el hospital correspondiente
                     }
                 }
+
+                // Si no existen más caminos posibles, termina el algoritmo
                 if (u == -1)
                     break;
 
-                visitado[u] = true;
+                visitado[u] = true; // Marca el hospital como visitado
 
+                // Revisar los hospitales vecinos
                 for (int v = 0; v < n; v++)
                 {
+                    // Verifica si existe una ruta más corta
                     if (!visitado[v] &&
                         ma[u, v] > 0 &&
                         distancia[u] != int.MaxValue &&
                         distancia[u] + ma[u, v] < distancia[v])
                     {
-                        distancia[v] = distancia[u] + ma[u, v]; 
-                        anterior[v] = u;
+                        distancia[v] = distancia[u] + ma[u, v]; // Actualiza la distancia mínima
+                        anterior[v] = u; // Guarda el hospital anterior de la ruta
                     }
                 }
             }
@@ -185,21 +193,24 @@ namespace Clases
         // Mostrar la ruta óptima utilizando recursividad
         private void MostrarRuta(int[] anterior, int destino)
         {
-            if (anterior[destino] == -1)
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine(nombres_hospital[destino]);
-                Console.ResetColor();
-                return; 
-            }
-            MostrarRuta(anterior, anterior[destino]);
+            // Si no existe un hospital anterior, significa que es el inicio de la ruta
+    if (anterior[destino] == -1)
+    {
+        Console.ForegroundColor = ConsoleColor.Green; // Cambia el color del texto
+        Console.WriteLine(nombres_hospital[destino]); // Muestra el hospital
+        Console.ResetColor(); // Restaura el color original
+        return; // Finaliza la llamada recursiva
+    }
 
-            Console.WriteLine("   | ");
-            Console.WriteLine("   V ");
+    // Llama al método para mostrar primero los hospitales anteriores
+    MostrarRuta(anterior, anterior[destino]);
 
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(nombres_hospital[destino]);
-            Console.ResetColor();
+    Console.WriteLine("   | "); // Dibuja la línea de la ruta
+    Console.WriteLine("   V "); // Dibuja la flecha hacia el siguiente hospital
+
+    Console.ForegroundColor = ConsoleColor.Green; // Cambia el color del texto
+    Console.WriteLine(nombres_hospital[destino]); // Muestra el hospital actual
+    Console.ResetColor(); // Restaura el color original
         }
     }
 }
