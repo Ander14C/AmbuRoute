@@ -14,59 +14,40 @@ namespace Clases
         int[,] ma;
 
         // Hospitales fijos
-        string[] nombres =
-        {
-        "Hospital Central",
-        "Hospital Norte",
-        "Hospital Sur",
-        "Clinica San Jose",
-        "ESSALUD",
-        "Hospital Regional"
-    };
+        string[] nombres_hospital = {"Hospital Central", "Hospital Norte", "Hospital Sur", "Clinica San Jose", "ESSALUD", "Hospital Regional"};
 
         // Nivel de cada hospital
-        string[] niveles =
-        {
-        "III",
-        "II",
-        "II",
-        "I",
-        "III",
-        "II"
-    };
+        string[] niveles = {"III", "II", "II", "I", "III", "II"};
 
         // Constructor
         public Grafo()
         {
             Random r = new Random();
 
-            for (int i = 0; i < nombres.Length; i++)
+            for (int i = 0; i < nombres_hospital.Length; i++)//Aqui el length es para que el for se repita la cantidad de veces que hay hospitales(6)
             {
                 Hospital h = new Hospital();
 
-                h.nombre = nombres[i];
+                h.nombre = nombres_hospital[i];
                 h.nivel = niveles[i];
-                h.capacidad = r.Next(80, 251);
+                h.capacidad = r.Next(80, 200);
 
                 l_vertices.Insertar(h);
             }
 
-            ma = new int[nombres.Length, nombres.Length];
+            ma = new int[nombres_hospital.Length, nombres_hospital.Length];//El length es para que la matriz se cree con el tamaño de la cantidad de hospitales que hay(6)
         }
 
         // Devuelve la cantidad de hospitales
         public int CantidadHospitales()
         {
-            return nombres.Length;
+            return nombres_hospital.Length;
         }
 
         // Mostrar hospitales registrados
         public void MostrarHospitales()
         {
-            //Console.WriteLine("\n==========================================");
-            Console.WriteLine("      HOSPITALES REGISTRADOS");
-            Console.WriteLine("==========================================\n");
-
+            Console.WriteLine("INFORMACION DE HOSPITALES:");
             l_vertices.Mostrar();
         }
 
@@ -79,22 +60,22 @@ namespace Clases
             {
                 for (int j = 0; j < ma.GetLength(1); j++)
                 {
-                    if (i == j)
+                    if (i == j) //Hace que los hospitales no puedan conectarse consigo mismos, es decir, que no se pueda ir de un hospital a si mismo
                     {
                         ma[i, j] = 0;
                     }
-                    else if (j > i)
+                    else if (j > i)//Hace que la matriz sea simétrica, es decir, que si hay una ruta de un hospital a otro, también haya una ruta de ese hospital al primero
                     {
-                        int existe = r.Next(0, 2);
+                        int existe = r.Next(0, 2);//Genera aleatoriamente si habra o no una conexion entre los hospitales, siendo 0 que no habra conexion y 1 que si habra conexion
 
-                        if (existe == 1)
+                        if (existe == 1)//Verifica si se creo una conexion entre los hospitales, si es asi, genera un tiempo aleatorio entre 5 y 30 minutos para la ruta
                         {
                             int tiempo = r.Next(5, 31);
 
                             ma[i, j] = tiempo;
                             ma[j, i] = tiempo;
                         }
-                        else
+                        else//Si no se creo una conexion entre los hospitales, asigna un valor de 0 a la matriz, indicando que no hay conexion entre esos hospitales
                         {
                             ma[i, j] = 0;
                             ma[j, i] = 0;
@@ -107,38 +88,28 @@ namespace Clases
         // Mostrar la matriz
         public void MostrarMatriz()
         {
-            Console.WriteLine("\n==========================================");
-            Console.WriteLine("        MATRIZ DE ADYACENCIA");
-            Console.WriteLine("==========================================\n");
-
-            Console.Write("\t");
-
-            for (int i = 0; i < CantidadHospitales(); i++)
+            for (int i = 0; i < CantidadHospitales(); i++)//Muestra la parte de arriba de la matriz que seria: H1, H2, H3 etc
             {
                 Console.Write("H" + (i + 1) + "\t");
             }
-
             Console.WriteLine();
 
-            for (int i = 0; i < CantidadHospitales(); i++)
+            for (int i = 0; i < CantidadHospitales(); i++)//Recorre cada fila de la matriz 
             {
-                Console.Write("H" + (i + 1) + "\t");
-
-                for (int j = 0; j < CantidadHospitales(); j++)
+                Console.Write("H" + (i + 1) + "\t");//Muestra el nombre del hospital(H1, H2, H3 etc) al inicio de cada fila
+                for (int j = 0; j < CantidadHospitales(); j++)//Recorre todas las columna.
                 {
-                    Console.Write(ma[i, j] + "\t");
+                    Console.Write(ma[i, j] + "\t");//Muestra el valor almacenado en la matriz, por ejemplo si ma[0,2] = 5 imprime 5
                 }
-
                 Console.WriteLine();
             }
 
             Console.WriteLine();
-
             Console.WriteLine("Referencia:");
 
-            for (int i = 0; i < nombres.Length; i++)
+            for (int i = 0; i < nombres_hospital.Length; i++)//Recorre todos los hospitales para mostrar su nombre
             {
-                Console.WriteLine("H" + (i + 1) + " -> " + nombres[i]);
+                Console.WriteLine("H" + (i + 1) + " -> " + nombres_hospital[i]);//Relaciona el codigo del hospital(H1, H2, H3 etc) con su nombre completo
             }
         }
 
@@ -150,17 +121,14 @@ namespace Clases
             for (int i = 0; i < CantidadHospitales(); i++)
             {
                 Vertice destino = l_vertices.primero;
-
                 for (int j = 0; j < CantidadHospitales(); j++)
                 {
-                    if (ma[i, j] > 0)
+                    if (ma[i, j] > 0)//Lo que hace es verificar si hay una conexion entre el hospital de origen y destino
                     {
-                        origen.ls.Insertar(destino, ma[i, j]);
+                        origen.ls.Insertar(destino, ma[i, j]);//Agrega la conexión del hospital de origen hacia el hospital de destino con su tiempo correspondiente.
                     }
-
                     destino = destino.sig;
                 }
-
                 origen = origen.sig;
             }
         }
@@ -168,45 +136,39 @@ namespace Clases
         // Algoritmo de Dijkstra
         public void Dijkstra(int origen, int destino)
         {
-            int n = CantidadHospitales();
+            int n = CantidadHospitales(); 
 
             int[] distancia = new int[n];
             bool[] visitado = new bool[n];
             int[] anterior = new int[n];
 
-            // Inicializar
             for (int i = 0; i < n; i++)
             {
-                distancia[i] = int.MaxValue;
+                distancia[i] = int.MaxValue; 
                 visitado[i] = false;
                 anterior[i] = -1;
             }
 
-            distancia[origen] = 0;
+            distancia[origen] = 0; 
 
-            // Algoritmo principal
             for (int i = 0; i < n - 1; i++)
             {
-                int menor = int.MaxValue;
-                int u = -1;
+                int menor = int.MaxValue; 
+                int u = -1; 
 
-                // Buscar el vértice con menor distancia
                 for (int j = 0; j < n; j++)
                 {
                     if (!visitado[j] && distancia[j] < menor)
                     {
-                        menor = distancia[j];
-                        u = j;
+                        menor = distancia[j]; 
+                        u = j; 
                     }
                 }
-
-                // Si no hay más caminos posibles
                 if (u == -1)
                     break;
 
                 visitado[u] = true;
 
-                // Actualizar las distancias
                 for (int v = 0; v < n; v++)
                 {
                     if (!visitado[v] &&
@@ -214,26 +176,11 @@ namespace Clases
                         distancia[u] != int.MaxValue &&
                         distancia[u] + ma[u, v] < distancia[v])
                     {
-                        distancia[v] = distancia[u] + ma[u, v];
+                        distancia[v] = distancia[u] + ma[u, v]; 
                         anterior[v] = u;
                     }
                 }
             }
-
-            // Verificar si existe ruta
-            if (distancia[destino] == int.MaxValue)
-            {
-                Console.WriteLine("\nNo existe una ruta entre esos hospitales.");
-                return;
-            }
-
-            Console.WriteLine("\n==========================================");
-            Console.WriteLine("          RUTA ÓPTIMA");
-            Console.WriteLine("==========================================");
-
-            MostrarRuta(anterior, destino);
-
-            Console.WriteLine("\nTiempo total: " + distancia[destino] + " minutos");
         }
         // Mostrar la ruta óptima utilizando recursividad
         private void MostrarRuta(int[] anterior, int destino)
@@ -241,16 +188,17 @@ namespace Clases
             if (anterior[destino] == -1)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine(nombres[destino]);
+                Console.WriteLine(nombres_hospital[destino]);
                 Console.ResetColor();
-                return;
+                return; 
             }
-
             MostrarRuta(anterior, anterior[destino]);
 
-            Console.WriteLine("   ↓");
+            Console.WriteLine("   | ");
+            Console.WriteLine("   V ");
+
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(nombres[destino]);
+            Console.WriteLine(nombres_hospital[destino]);
             Console.ResetColor();
         }
     }

@@ -34,30 +34,5 @@ namespace Clases
                 temp.sig = nuevo;
             }
         }
-
-        // Mostrar todas las rutas disponibles
-        public void Mostrar()
-        {
-            if (primero == null)
-            {
-                Console.WriteLine("No existen rutas.");
-                return;
-            }
-
-            Arista temp = primero;
-            int i = 1;
-
-            while (temp != null)
-            {
-                Console.WriteLine(i + ". " +
-                                  temp.destino.dato.nombre +
-                                  " - Tiempo: " +
-                                  temp.peso +
-                                  " minutos");
-
-                temp = temp.sig;
-                i++;
-            }
-        }
     }
 }
